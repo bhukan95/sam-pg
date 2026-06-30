@@ -1,4 +1,3 @@
-const Inquiry = require("../model/inquiry_model");
 const { sendEmail } =
   require("../services/email_service");
 
@@ -11,13 +10,6 @@ const {
 exports.createInquiry = async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
-
-    const inquiry = await Inquiry.create({
-      name,
-      email,
-      phone,
-      message,
-    });
 
     // Send emails
     try {
@@ -52,9 +44,10 @@ exports.createInquiry = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      data: inquiry,
+      message: "Inquiry submitted successfully",
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       message: err.message,
